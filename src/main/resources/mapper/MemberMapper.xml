@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjw.frms.dao.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.sjw.frms.model.Member">
+    <id column="MEMBER_ID" jdbcType="VARCHAR" property="memberId" />
+    <result column="MEMBER_NAME" jdbcType="VARCHAR" property="memberName" />
+    <result column="MEMBER_STATE" jdbcType="VARCHAR" property="memberState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MEMBER_ID, MEMBER_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where MEMBER_ID = #{memberId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from member
+      where MEMBER_STATE='1'
+      limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+    </select>
+  <select id="selectCount" resultType="int">
+      select count(1)
+      from member
+      where MEMBER_STATE='1'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update member
+    set MEMBER_STATE='0'
+    where MEMBER_ID = #{memberId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.sjw.frms.model.Member">
+    <selectKey resultType="java.lang.String" order="BEFORE"
+               keyProperty="memberId">
+      select REPLACE(UUID(),'-','') from dual
+    </selectKey>
+    insert into member (MEMBER_ID, MEMBER_NAME,MEMBER_STATE)
+    values (#{memberId,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, '1')
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sjw.frms.model.Member">
+    update member
+    set MEMBER_NAME = #{memberName,jdbcType=VARCHAR}
+    where MEMBER_ID = #{memberId,jdbcType=VARCHAR}
+  </update>
+</mapper>
