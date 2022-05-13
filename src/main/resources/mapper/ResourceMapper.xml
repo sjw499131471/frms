@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.sjw.frms.model.Resource">
     <id column="RESOURCE_ID" jdbcType="VARCHAR" property="resourceId" />
     <result column="RESOURCE_NAME" jdbcType="VARCHAR" property="resourceName" />
-    <result column="RESOURCE_TYPE" jdbcType="INTEGER" property="resourceType" />
+    <result column="RESOURCE_TYPE_ID" jdbcType="VARCHAR" property="resourceType" />
     <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
     <result column="MEMBER_ID" jdbcType="VARCHAR" property="memberId" />
@@ -15,7 +15,7 @@
     <result column="RESOURCE_STATE" jdbcType="VARCHAR" property="resourceState" />
   </resultMap>
   <sql id="Base_Column_List">
-    RESOURCE_ID, RESOURCE_NAME, RESOURCE_TYPE, CREATED_TIME, END_TIME, MEMBER_ID, PRICE, 
+    RESOURCE_ID, RESOURCE_NAME, RESOURCE_TYPE_ID, CREATED_TIME, END_TIME, MEMBER_ID, PRICE,
     COUNT, IMAGE, TAGS, RESOURCE_STATE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -25,12 +25,15 @@
     where RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
   </select>
   <select id="selectList" resultMap="BaseResultMap">
-      select
-      <include refid="Base_Column_List" />
-      from resource
-      where RESOURCE_STATE='1'
-      limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
-    </select>
+    select
+    <include refid="Base_Column_List" />
+    from resource
+    where RESOURCE_STATE='1'
+    <if test="where != null and where != ''">
+      ${where}
+    </if>
+    limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+  </select>
   <select id="selectCount" resultType="int">
       select count(1)
       from resource
@@ -47,11 +50,12 @@
                keyProperty="resourceId">
       select REPLACE(UUID(),'-','') from dual
     </selectKey>
-    insert into resource (RESOURCE_ID, RESOURCE_NAME, RESOURCE_TYPE, 
+    insert into resource (RESOURCE_ID, RESOURCE_NAME, RESOURCE_TYPE_ID,
       CREATED_TIME, END_TIME, MEMBER_ID, 
       PRICE, COUNT, IMAGE, 
       TAGS, RESOURCE_STATE)
-    values (#{resourceId,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, #{resourceType,jdbcType=INTEGER}, 
+    values (#{resourceId,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, #{resourceType,jdbcType=VARCHAR
+    },
       #{createdTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{memberId,jdbcType=VARCHAR}, 
       #{price,jdbcType=VARCHAR}, #{count,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{tags,jdbcType=VARCHAR}, '1')
@@ -60,15 +64,10 @@
   <update id="updateByPrimaryKey" parameterType="com.sjw.frms.model.Resource">
     update resource
     set RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR},
-      RESOURCE_TYPE = #{resourceType,jdbcType=INTEGER},
-      CREATED_TIME = #{createdTime,jdbcType=TIMESTAMP},
-      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      RESOURCE_TYPE_ID = #{resourceType,jdbcType=VARCHAR},
       MEMBER_ID = #{memberId,jdbcType=VARCHAR},
       PRICE = #{price,jdbcType=VARCHAR},
-      COUNT = #{count,jdbcType=VARCHAR},
-      IMAGE = #{image,jdbcType=VARCHAR},
-      TAGS = #{tags,jdbcType=VARCHAR},
-      RESOURCE_STATE = #{resourceState,jdbcType=VARCHAR}
+      COUNT = #{count,jdbcType=VARCHAR}
     where RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjw.frms.dao.ResourceTypeMapper">
+  <resultMap id="BaseResultMap" type="com.sjw.frms.model.ResourceType">
+    <id column="TYPE_ID" jdbcType="VARCHAR" property="typeId" />
+    <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName" />
+    <result column="PARENT_TYPE" jdbcType="VARCHAR" property="parentType" />
+    <result column="TYPE_STATE" jdbcType="VARCHAR" property="typeState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TYPE_ID, TYPE_NAME, PARENT_TYPE, TYPE_STATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from resource_type
+    where TYPE_ID = #{typeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from resource_type
+    where TYPE_STATE='1'
+    limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+  </select>
+  <select id="selectCount" resultType="int">
+      select count(1)
+      from resource_type
+      where TYPE_STATE='1'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update resource_type
+    set TYPE_STATE='0'
+    where TYPE_ID = #{typeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sjw.frms.model.ResourceType">
+    insert into resource_type (TYPE_ID, TYPE_NAME, PARENT_TYPE, 
+      TYPE_STATE)
+    values (#{typeId,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, #{parentType,jdbcType=VARCHAR}, 
+      '1')
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sjw.frms.model.ResourceType">
+    update resource_type
+    set TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      PARENT_TYPE = #{parentType,jdbcType=VARCHAR},
+      TYPE_STATE = #{typeState,jdbcType=VARCHAR}
+    where TYPE_ID = #{typeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -10,19 +10,31 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 </head>
-<body style="padding: 15px;">
-<div>
-    <button class="layui-btn" onclick="addOrEdit();"> <i class="fa fa-plus-circle"></i> 添加</button>
+<body>
+<div class="container">
+    <div class="row">
+        <button class="layui-btn" onclick="addOrEdit();"> <i class="fa fa-plus-circle"></i> 添加</button>
+    </div>
     <hr>
     <div class="row">
         <#list members as member>
-            <div class="col-xs-6 col-md-3 col-lg-1">
+            <div class="col-xs-6 col-md-3 col-lg-2">
                 <a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal" onclick="javascript:$('#image').attr('src','/image/test1.jpg');">
                     <img src="/img/member/${member.memberId}.png" onerror="this.src='/img/profile.png'" title="头像" style="width: 100px;height: 100px;">
                 </a>
                 <div class="caption">
                     <h3 style="text-align: center;">${member.memberName}</h3>
-                    <p style="text-align: center;"><a href="#" class="btn btn-primary" role="button">查看物资</a></p>
+                    <div style="text-align: center;">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                物资管理 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:viewResources('${member.memberId}')">查看物资</a></li>
+                                <li><a href="javascript:addResource('${member.memberId}')">添加物资</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </#list>
@@ -33,7 +45,7 @@
 <script src="/layui/layui.js"></script>
 <script type="text/javascript">
     let layer;
-    $("document").ready(function (){
+    $(document).ready(function (){
         layui.use('layer', function(){
             layer = layui.layer;
         });
@@ -46,6 +58,26 @@
             }else {
                 showMsg(result.message);
             }
+        });
+    }
+
+    function viewResources(memberId){
+        layer.open({
+            title: '查看物资'
+            ,type:2
+            ,area:['90vw','90vh']
+            ,offset:'15px'
+            ,content: '/resourceType?memberId='+memberId
+        });
+    }
+
+    function addResource(memberId){
+        layer.open({
+            title: '添加物资'
+            ,type:2
+            ,area:['500px','600px']
+            ,offset:'100px'
+            ,content: '/resource/addOrEditPage?memberId='+memberId
         });
     }
 

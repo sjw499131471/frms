@@ -4,10 +4,12 @@ import com.sjw.frms.dao.ResourceMapper;
 import com.sjw.frms.model.Resource;
 import com.sjw.frms.service.IResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class ResourceServiceImpl implements IResourceService {
     @Autowired
     ResourceMapper resourceMapper;
@@ -34,6 +36,17 @@ public class ResourceServiceImpl implements IResourceService {
 
     @Override
     public List<Resource> selectList(Map<String, Object> map) {
+        StringBuilder sb = new StringBuilder();
+        if (map.containsKey("typeId")){
+            String typeId = map.get("typeId").toString();
+            if (typeId != null && !("1".equals(typeId)))
+                sb.append("AND RESOURCE_TYPE_ID='" + typeId + "'");
+        }
+        if (map.containsKey("memberId")){
+            String memberId = map.get("memberId").toString();
+            sb.append("AND MEMBER_ID='" + memberId + "'");
+        }
+        map.put("where",sb.toString());
         return resourceMapper.selectList(map);
     }
 

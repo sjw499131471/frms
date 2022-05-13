@@ -7,7 +7,7 @@ public class Resource {
 
     private String resourceName;
 
-    private Integer resourceType;
+    private String resourceType;
 
     private Date createdTime;
 
@@ -41,11 +41,11 @@ public class Resource {
         this.resourceName = resourceName == null ? null : resourceName.trim();
     }
 
-    public Integer getResourceType() {
+    public String getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(Integer resourceType) {
+    public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
 
