@@ -22,7 +22,7 @@
             <div class="layui-row" style="height: 10%;">
             </div>
             <div class="layui-row" style="height: 90%;">
-                <iframe src="resource?typeId=1&memberId=${memberId}" style="width: 100%;height: 100%;border:1px solid #eee;"></iframe>
+                <iframe id="resourceFrame" src="resource?typeId=1&memberId=${memberId}" style="width: 100%;height: 100%;border:1px solid #eee;"></iframe>
             </div>
         </div>
     </div>
@@ -32,6 +32,7 @@
 <script src="/layui/layui.js"></script>
 <script type="text/javascript">
     let layer,tree;
+    let memberId = '${memberId}';
     $(document).ready(function (){
         layui.use(['tree', 'layer'], function(){
             layer = layui.layer,tree = layui.tree;
@@ -69,7 +70,8 @@
                 ,data: data
                 ,edit: ['add', 'update', 'del'] //操作节点的图标
                 ,click: function(obj){
-                    //layer.msg(JSON.stringify(obj.data));
+                    //layer.msg(obj.data.title);
+                    $("#resourceFrame").attr("src","resource?typeId="+obj.data.id+"&memberId="+memberId);
                 }
             });
         });

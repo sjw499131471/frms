@@ -12,10 +12,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <button class="layui-btn" onclick="addOrEdit();"> <i class="fa fa-plus-circle"></i> 添加</button>
-    </div>
-    <hr>
+    <blockquote class="layui-elem-quote">家庭成员</blockquote>
     <div class="row">
         <#list members as member>
             <div class="col-xs-6 col-md-3 col-lg-2">
@@ -36,6 +33,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-xs-6 col-md-3 col-lg-2" style="padding: 30px;">
+                <a class="fa fa-plus" style="font-size:50px; " aria-hidden="true" onclick="javascript:addOrEdit();"></a>
             </div>
         </#list>
     </div>
@@ -75,8 +75,8 @@
         layer.open({
             title: '添加物资'
             ,type:2
-            ,area:['500px','600px']
-            ,offset:'100px'
+            ,area:['500px','80vh']
+            ,offset:'15px'
             ,content: '/resource/addOrEditPage?memberId='+memberId
         });
     }

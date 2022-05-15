@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 </head>
 <body>
-<div class="layui-container">
+<div class="layui-container" style="padding: 15px;">
     <div class="layui-row">
         <div class="layui-col-md12">
             <form class="layui-form">

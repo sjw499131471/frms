@@ -15,9 +15,9 @@ public class Resource {
 
     private String memberId;
 
-    private String price;
+    private Double price;
 
-    private String count;
+    private Integer count;
 
     private String image;
 
@@ -73,20 +73,20 @@ public class Resource {
         this.memberId = memberId == null ? null : memberId.trim();
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price == null ? null : price.trim();
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public String getCount() {
+    public Integer getCount() {
         return count;
     }
 
-    public void setCount(String count) {
-        this.count = count == null ? null : count.trim();
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public String getImage() {

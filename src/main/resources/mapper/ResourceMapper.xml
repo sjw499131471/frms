@@ -8,8 +8,8 @@
     <result column="CREATED_TIME" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
     <result column="MEMBER_ID" jdbcType="VARCHAR" property="memberId" />
-    <result column="PRICE" jdbcType="VARCHAR" property="price" />
-    <result column="COUNT" jdbcType="VARCHAR" property="count" />
+    <result column="PRICE" jdbcType="DOUBLE" property="price" />
+    <result column="COUNT" jdbcType="INTEGER" property="count" />
     <result column="IMAGE" jdbcType="VARCHAR" property="image" />
     <result column="TAGS" jdbcType="VARCHAR" property="tags" />
     <result column="RESOURCE_STATE" jdbcType="VARCHAR" property="resourceState" />
@@ -57,7 +57,7 @@
     values (#{resourceId,jdbcType=VARCHAR}, #{resourceName,jdbcType=VARCHAR}, #{resourceType,jdbcType=VARCHAR
     },
       #{createdTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{memberId,jdbcType=VARCHAR}, 
-      #{price,jdbcType=VARCHAR}, #{count,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{count,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR},
       #{tags,jdbcType=VARCHAR}, '1')
   </insert>
 
@@ -66,8 +66,8 @@
     set RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR},
       RESOURCE_TYPE_ID = #{resourceType,jdbcType=VARCHAR},
       MEMBER_ID = #{memberId,jdbcType=VARCHAR},
-      PRICE = #{price,jdbcType=VARCHAR},
-      COUNT = #{count,jdbcType=VARCHAR}
+      PRICE = #{price,jdbcType=DOUBLE},
+      COUNT = #{count,jdbcType=INTEGER}
     where RESOURCE_ID = #{resourceId,jdbcType=VARCHAR}
   </update>
 </mapper>
