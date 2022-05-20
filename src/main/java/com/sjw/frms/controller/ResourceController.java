@@ -5,9 +5,11 @@ import com.sjw.frms.service.IResourceService;
 import com.sjw.frms.service.IResourceTypeService;
 import com.sjw.frms.utils.ParamHandler;
 import com.sun.javafx.binding.StringFormatter;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,6 +35,7 @@ public class ResourceController {
     IResourceTypeService resourceTypeService;
 
     Logger logger = LoggerFactory.getLogger(getClass());
+    private static String strSeparator =System.getProperty("file.separator");
 
     @RequestMapping
     public String resource(Model model,HttpServletRequest request){
@@ -40,6 +44,20 @@ public class ResourceController {
         params.put("limit",100);
         model.addAttribute("resources",resourceService.selectList(params));
         return "resources";
+    }
+
+    @GetMapping("/{memberId}/{resourceId}")
+    public void getImage(@PathVariable String memberId, @PathVariable String resourceId, HttpServletResponse response){
+        String rootPath = System.getenv( "SystemRoot").split(strSeparator+strSeparator)[0];
+        String path = rootPath+strSeparator+"resource"+strSeparator+memberId+strSeparator+resourceId+".png";
+        try {
+            final InputStream inputStream = new FileInputStream(new File(path));
+            response.setContentType(MediaType.IMAGE_PNG_VALUE);
+            IOUtils.copy(inputStream, response.getOutputStream());
+        } catch (Exception e) {
+            //e.printStackTrace();
+            logger.info(e.getMessage());
+        }
     }
 
     @RequestMapping("addOrEditPage")
@@ -90,7 +108,9 @@ public class ResourceController {
         //如果文件不为空，写入上传路径
         if(!file.isEmpty()) {
             //上传文件路径
-            String path = request.getServletContext().getRealPath("/img/resource/"+memberId);
+            String rootPath = System.getenv( "SystemRoot").split(strSeparator+strSeparator)[0];
+            String path = rootPath+strSeparator+"resource"+strSeparator+memberId;
+//            String path = request.getServletContext().getRealPath("/img/resource/"+memberId);
 
             File filepath = new File(path,resourceId+".png");
             logger.info(filepath.getAbsolutePath());

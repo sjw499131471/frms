@@ -16,7 +16,8 @@
         <#list resources as resource>
             <div class="col-xs-6 col-md-3 col-lg-2">
                 <a href="#" class="thumbnail" data-toggle="modal" data-target="#myModal" onclick="javascript:$('#image').attr('src','/image/test1.jpg');">
-                    <img src="/img/resource/${resource.memberId}/${resource.resourceId}.png" onerror="this.src='/img/profile.png'" title="头像" style="width: 100px;height: 100px;">
+<#--                    <img src="/img/resource/${resource.memberId}/${resource.resourceId}.png" onerror="this.src='/img/profile.png'" title="物资" style="width: 100px;height: 100px;">-->
+                    <img src="resource/${resource.memberId}/${resource.resourceId}" onerror="this.src='/img/profile.png'" title="物资" style="width: 100px;height: 100px;">
                 </a>
                 <div class="caption">
                     <h3 style="text-align: center;">${resource?counter}.${resource.resourceName}</h3>
