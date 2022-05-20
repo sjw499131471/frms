@@ -34,10 +34,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6 col-md-3 col-lg-2" style="padding: 30px;">
-                <a class="fa fa-plus" style="font-size:50px; " aria-hidden="true" onclick="javascript:addOrEdit();"></a>
-            </div>
         </#list>
+        <div class="col-xs-6 col-md-3 col-lg-2" style="padding: 30px;">
+            <a class="fa fa-plus" style="font-size:50px; " aria-hidden="true" onclick="javascript:addOrEdit();"></a>
+        </div>
     </div>
 </div>
 <script src="/js/jquery.min.js"></script>

@@ -19,7 +19,7 @@
                     <img src="/img/resource/${resource.memberId}/${resource.resourceId}.png" onerror="this.src='/img/profile.png'" title="头像" style="width: 100px;height: 100px;">
                 </a>
                 <div class="caption">
-                    <h3 style="text-align: center;">${resource.resourceName}</h3>
+                    <h3 style="text-align: center;">${resource?counter}.${resource.resourceName}</h3>
                     <div style="text-align: center;">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

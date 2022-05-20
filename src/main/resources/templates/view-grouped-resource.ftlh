@@ -7,23 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="/layui/css/layui.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
 </head>
 <body style="padding: 15px;">
 <div class="layui-container">
     <div class="layui-row">
-        <div class="layui-col-md3 layui-bg-gray" style="height: 100vh;padding: 15px;">
+        <div class="layui-col-md3" style="height: calc(100vh - 30px);padding: 15px;background-color: #FAFAFA;">
             <div class="layui-panel">
                 <div id="tree" class="demo-tree demo-tree-box"></div>
             </div>
         </div>
-        <div class="layui-col-md9" style="height: 100vh;">
-            <div class="layui-row" style="height: 10%;">
-            </div>
-            <div class="layui-row" style="height: 90%;">
-                <iframe id="resourceFrame" src="resource?typeId=1&memberId=${memberId}" style="width: 100%;height: 100%;border:1px solid #eee;"></iframe>
-            </div>
+        <div class="layui-col-md9" style="height: calc(100vh - 30px);">
+            <iframe id="resourceFrame" src="resource?typeId=1&memberId=${memberId}" style="width: 100%;height: 100%;border:1px solid #eee;"></iframe>
         </div>
     </div>
 </div>
@@ -49,6 +43,7 @@
                         title: '${type.typeName}'
                         ,id: '${type.typeId}'
                         ,spread:true
+                        ,disabled:true
                         ,children: [
                             <#list types as type2>
                                 <#if type2.parentType?? && type2.parentType=type.typeId>
